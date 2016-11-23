@@ -204,7 +204,21 @@ define [
             overwriteAssessmentContent: new OverwriteAssessmentContentView(model: ConverterViewControl.getModel())
             questionBank:        new QuestionBankView(questionBanks: ENV.QUESTION_BANKS, model: ConverterViewControl.getModel())
 
+  ConverterViewControl.register
+    key: 'blackboard_importer'
+    view: new CanvasExportView
+            chooseMigrationFile: new ChooseMigrationFileView
+                                   model: ConverterViewControl.getModel()
+                                   fileSizeLimit: ENV.UPLOAD_LIMIT
 
+            selectContent:       new SelectContentCheckboxView(model: ConverterViewControl.getModel())
+
+            dateShift:        new DateShiftView
+                                model: ConverterViewControl.getModel()
+                                collection: daySubCollection
+                                daySubstitution: daySubCollectionView
+                                oldStartDate: ENV.OLD_START_DATE
+                                oldEndDate: ENV.OLD_END_DATE
 
 
   registerExternalTool = (et) ->

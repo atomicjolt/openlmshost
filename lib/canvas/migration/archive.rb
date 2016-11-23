@@ -84,7 +84,7 @@ module Canvas::Migration
           diagnostic_text += tag.to_s + ': ' + files.join(', ') + "\n"
         end
         Rails.logger.debug "CanvasUnzip returned warnings: " + diagnostic_text
-        add_warning(I18n.t('canvas.migration.warning.unzip_warning', 'The content package unzipped successfully, but with a warning'), diagnostic_text)
+        add_warning(I18n.t('canvas.migration.warning.unzip_warning', "The content package unzipped successfully, but with a warning: #{diagnostic_text}"))
       end
       return true
     end
