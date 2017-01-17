@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.6.1'
+# lock '3.6.1'
 
 set :application, 'openlmshost'
 set :repo_url, 'git@github.com:atomicjolt/canvas-lms.git'
@@ -27,7 +27,7 @@ set :rails_env, 'production'
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/amazon_s3.yml', 'config/cassandra.yml', 'config/domain.yml', 'config/fontcustom.yml', 'config/security.yml', 'config/database.yml', 'config/external_migration.yml', 'config/outgoing_mail.yml', 'config/styleguide.yml', 'config/browsers.yml', 'config/delayed_jobs.yml', 'config/file_store.yml', 'config/redis.yml', 'config/testem.yml', 'Gemfile.lock', 'config/bb_importer_credentials.yml'
+append :linked_files, 'config/database.yml', 'config/amazon_s3.yml', 'config/cassandra.yml', 'config/domain.yml', 'config/fontcustom.yml', 'config/security.yml', 'config/database.yml', 'config/external_migration.yml', 'config/outgoing_mail.yml', 'config/styleguide.yml', 'config/browsers.yml', 'config/delayed_jobs.yml', 'config/file_store.yml', 'config/redis.yml', 'config/testem.yml', 'Gemfile.lock', 'config/bb_importer_credentials.yml', 'config/dynamic_settings.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp', 'node_modules', 'public/assets', 'public/stylesheets', 'vendor/QTIMigrationTool', 'gems/plugins/analytics'
@@ -162,4 +162,3 @@ before 'deploy:started', 'canvas:meta_tasks:before_started'
 before 'deploy:updated', 'canvas:meta_tasks:before_updated'
 after 'deploy:updated', 'canvas:meta_tasks:after_updated'
 after 'deploy:published', 'canvas:meta_tasks:after_published'
-
