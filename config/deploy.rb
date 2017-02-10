@@ -47,15 +47,17 @@ namespace :canvas do
   task :setup_permissions do
     on roles(:all) do
       user = fetch :user
-      execute :mkdir, '-p', "#{release_path}/public/stylesheets/compiled"
 
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/environment.rb"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/log"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/tmp"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/assets"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/stylesheets/compiled"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/Gemfile.lock"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config.ru"
+
+      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/app/stylesheets"
+      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/stylesheets/compiled"
+      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/dist/brandable_css/"
 
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/*.yml"
       execute :sudo, 'chmod', '440', "#{release_path}/config/*.yml"
