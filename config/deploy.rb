@@ -27,7 +27,7 @@ set :rails_env, 'production'
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/amazon_s3.yml', 'config/cassandra.yml', 'config/domain.yml', 'config/fontcustom.yml', 'config/security.yml', 'config/database.yml', 'config/external_migration.yml', 'config/outgoing_mail.yml', 'config/styleguide.yml', 'config/browsers.yml', 'config/delayed_jobs.yml', 'config/file_store.yml', 'config/redis.yml', 'config/testem.yml', 'Gemfile.lock', 'config/bb_importer_credentials.yml', 'config/dynamic_settings.yml'
+append :linked_files, 'config/database.yml', 'config/amazon_s3.yml', 'config/cassandra.yml', 'config/domain.yml', 'config/fontcustom.yml', 'config/security.yml', 'config/database.yml', 'config/external_migration.yml', 'config/outgoing_mail.yml', 'config/styleguide.yml', 'config/browsers.yml', 'config/delayed_jobs.yml', 'config/file_store.yml', 'config/redis.yml', 'config/testem.yml', 'Gemfile.lock', 'config/bb_importer_credentials.yml', 'config/dynamic_settings.yml', 'config/etherpad.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp', 'node_modules', 'public/assets', 'public/stylesheets', 'vendor/QTIMigrationTool', 'gems/plugins/analytics'
