@@ -417,21 +417,4 @@ Canvas::Plugin.register('live_events', nil, {
   :settings_partial => 'plugins/live_events_settings',
   :validator => 'LiveEventsValidator'
 })
-require_dependency 'canvas/migration/worker/cc_blackboard_worker'
-Canvas::Plugin.register 'blackboard_importer', :export_system, {
-  :name => lambda{ I18n.t :blackboard_cartridge_name, 'Blackboard Cartridge Importer' },
-  :display_name => lambda{ I18n.t :common_cartridge_display, 'Blackboard Cartridge' },
-  :author => 'Atomic Jolt',
-  :author_website => 'http://www.atomicjolt.com',
-  :description => lambda{ I18n.t :blackboard_cartridge_description, 'This enables converting a Blackboard Cartridge packages in the intermediary json format to be imported' },
-  :version => '1.0.0',
-  :select_text => lambda{ I18n.t :common_cartridge_file_description, "Blackboard Cartridge" },
-  :settings => {
-    :worker => 'CCBlackboardWorker',
-    :migration_partial => 'canvas_config',
-    :requires_file_upload => true,
-    :provides =>{:bb_learn => CC::Importer::Canvas::Converter},
-    :valid_contexts => %w{Account Course}
-  },
-}
 require_dependency 'canvas/plugins/address_book'
