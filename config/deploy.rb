@@ -2,7 +2,7 @@
 # lock '3.6.1'
 
 set :application, 'openlmshost'
-set :repo_url, 'git@github.com:atomicjolt/canvas-lms.git'
+set :repo_url, 'git@github.com:atomicjolt/openlmshost.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -75,10 +75,12 @@ namespace :canvas do
 
   desc "Compile static assets"
   task :compile_assets => :npm_install do
+    user = fetch :user
+
     on roles(:all) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, 'canvas:compile_assets[false]'
+          execute :sudo, "-u #{user}", "rake canvas:compile_assets[false]"
         end
       end
     end
@@ -86,11 +88,13 @@ namespace :canvas do
 
   desc "Rebuild brand_configs"
   task :build_brand_configs do
+    user = fetch :user
+
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute 'node_modules/.bin/gulp', 'rev'
-          execute :rake, "brand_configs:generate_and_upload_all"
+          execute :sudo, "-u #{user}", "rake brand_configs:generate_and_upload_all"
         end
       end
     end
@@ -98,10 +102,12 @@ namespace :canvas do
 
   desc "Run predeploy db migration task"
   task :migrate_predeploy do
+    user = fetch :user
+
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "db:migrate:predeploy"
+          execute :sudo, "-u #{user}", "rake db:migrate:predeploy"
         end
       end
     end
@@ -109,10 +115,11 @@ namespace :canvas do
 
   desc "Load new notification types"
   task :load_notifications do
+    user = fetch :user
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, 'db:load_notifications'
+          execute :sudo, "-u #{user}", "rake db:load_notifications"
         end
       end
     end
@@ -135,7 +142,7 @@ namespace :canvas do
 
     desc "Tasks that need to run before _started_"
     task :before_started do
-      invoke 'canvas:delayed_jobs:stop'
+      # invoke 'canvas:delayed_jobs:stop'
     end
 
     desc "Tasks that need to run before _updated_"
