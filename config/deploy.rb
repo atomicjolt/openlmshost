@@ -30,7 +30,7 @@ set :rails_env, 'production'
 append :linked_files, 'config/database.yml', 'config/amazon_s3.yml', 'config/cassandra.yml', 'config/domain.yml', 'config/fontcustom.yml', 'config/security.yml', 'config/database.yml', 'config/external_migration.yml', 'config/outgoing_mail.yml', 'config/styleguide.yml', 'config/browsers.yml', 'config/delayed_jobs.yml', 'config/file_store.yml', 'config/redis.yml', 'config/testem.yml', 'Gemfile.lock', 'config/bb_importer_credentials.yml', 'config/dynamic_settings.yml', 'config/etherpad.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp', 'node_modules', 'public/assets', 'public/stylesheets', 'vendor/QTIMigrationTool', 'gems/plugins/analytics', 'gems/plugins/senkyoshi_canvas_plugin'
+append :linked_dirs, 'log', 'tmp', 'node_modules', 'public/assets', 'public/stylesheets', 'vendor/QTIMigrationTool', 'gems/plugins/analytics', 'gems/plugins/senkyoshi_canvas_plugin', 'gems/plugins/quiz_proctor_engine', 'gems/plugins/etherpad_canvas'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
