@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:atomicjolt/canvas-lms.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, 'stable'
+set :branch, 'openlmshost-stable'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/srv/www/openlmshost'
