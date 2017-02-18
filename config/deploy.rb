@@ -39,29 +39,29 @@ append :linked_dirs, 'log', 'tmp', 'node_modules', 'public/assets', 'public/styl
 set :keep_releases, 2
 set :bundle_without, %w{sqlite}.join(' ')
 set :bundle_flags, '--quiet'
-set :user, 'canvas'
+set :user, 'ubuntu'
 
 namespace :canvas do
 
   desc "Fix ownership on canvas install directory"
   task :setup_permissions do
     on roles(:all) do
-      user = fetch :user
+      # user = fetch :user
 
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/environment.rb"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/log"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/tmp"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/assets"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/plugins"
-
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/Gemfile.lock"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config.ru"
-
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/app/stylesheets"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/stylesheets/compiled"
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/dist/brandable_css/"
-
-      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/*.yml"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/environment.rb"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/log"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/tmp"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/assets"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/plugins"
+      #
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/Gemfile.lock"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config.ru"
+      #
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/app/stylesheets"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/stylesheets/compiled"
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/dist/brandable_css/"
+      #
+      # execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config/*.yml"
       execute :sudo, 'chmod', '440', "#{release_path}/config/*.yml"
     end
   end
@@ -77,12 +77,10 @@ namespace :canvas do
 
   desc "Compile static assets"
   task :compile_assets => :npm_install do
-    user = fetch :user
-
     on roles(:all) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "bundle exec rake canvas:compile_assets[false]"
+          execute :rake, "canvas:compile_assets[false]"
         end
       end
     end
@@ -90,13 +88,12 @@ namespace :canvas do
 
   desc "Rebuild brand_configs"
   task :build_brand_configs do
-    user = fetch :user
 
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute 'node_modules/.bin/gulp', 'rev'
-          execute :sudo, "-u #{user}", "bundle exec rake brand_configs:generate_and_upload_all"
+          execute :rake, "brand_configs:generate_and_upload_all"
         end
       end
     end
@@ -104,12 +101,11 @@ namespace :canvas do
 
   desc "Run predeploy db migration task"
   task :migrate_predeploy do
-    user = fetch :user
 
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "bundle exec rake db:migrate:predeploy"
+          execute :rake, "db:migrate:predeploy"
         end
       end
     end
@@ -117,11 +113,10 @@ namespace :canvas do
 
   desc "Load new notification types"
   task :load_notifications do
-    user = fetch :user
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "bundle exec rake db:load_notifications"
+          execute :rake, "db:load_notifications"
         end
       end
     end
@@ -132,9 +127,8 @@ namespace :canvas do
     %w[start stop restart].each do |command|
       desc "#{command} the delayed_jobs processor"
       task command do
-        user = fetch :user
         on roles(:worker) do
-          execute :sudo, "-u #{user}", "/etc/init.d/canvas_init #{command}"
+          execute "/etc/init.d/canvas_init #{command}"
         end
       end
     end
