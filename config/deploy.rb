@@ -52,6 +52,8 @@ namespace :canvas do
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/log"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/tmp"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/assets"
+      execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/public/plugins"
+
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/Gemfile.lock"
       execute :sudo, 'chown', '-R', "#{user}", "#{release_path}/config.ru"
 
@@ -80,7 +82,7 @@ namespace :canvas do
     on roles(:all) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "rake canvas:compile_assets[false]"
+          execute :sudo, "-u #{user}", "bundle exec rake canvas:compile_assets[false]"
         end
       end
     end
@@ -94,7 +96,7 @@ namespace :canvas do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute 'node_modules/.bin/gulp', 'rev'
-          execute :sudo, "-u #{user}", "rake brand_configs:generate_and_upload_all"
+          execute :sudo, "-u #{user}", "bundle exec rake brand_configs:generate_and_upload_all"
         end
       end
     end
@@ -107,7 +109,7 @@ namespace :canvas do
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "rake db:migrate:predeploy"
+          execute :sudo, "-u #{user}", "bundle exec rake db:migrate:predeploy"
         end
       end
     end
@@ -119,7 +121,7 @@ namespace :canvas do
     on primary :db do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :sudo, "-u #{user}", "rake db:load_notifications"
+          execute :sudo, "-u #{user}", "bundle exec rake db:load_notifications"
         end
       end
     end
