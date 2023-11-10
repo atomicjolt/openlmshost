@@ -75,7 +75,7 @@
 
 
 
-    "axios": "0.15.2",
+    "axios": "1.6.0",
     "backbone": "1.1.1",
     "classnames": "~2.1.2",
     "color-slicer": "0.8.0",
